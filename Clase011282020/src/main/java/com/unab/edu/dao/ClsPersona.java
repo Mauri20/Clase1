@@ -39,6 +39,7 @@ public class ClsPersona {
                 //Agregando el objeto a la coleccion
                 Personas.add(persona);
             }
+            conectar.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -56,7 +57,7 @@ public class ClsPersona {
             //ResultSet resultado= Statement.executeQuery();
             Statement.execute();
             JOptionPane.showMessageDialog(null, "Datos ingresados Exitosamente!");
-
+            conectar.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al ingresar los Datos " + e);
 
@@ -71,7 +72,7 @@ public class ClsPersona {
             //ResultSet resultado= Statement.executeQuery();
             Statement.execute();
             JOptionPane.showMessageDialog(null, "Persona Eliminado de la Base de Datos!");
-
+            conectar.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al eliminar los Datos " + e);
 
@@ -89,7 +90,7 @@ public class ClsPersona {
             //ResultSet resultado= Statement.executeQuery();
             Statement.execute();
             JOptionPane.showMessageDialog(null, "Datos Actualizados Exitosamente!");
-
+            conectar.close();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al actualizar los Datos " + e);
 

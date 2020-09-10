@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.unab.edu.operacionesBd;
+package com.unab.edu.vistas;
 
 import com.unab.edu.conexionmysql.ConexionBd;
 import com.unab.edu.dao.ClsPersona;
@@ -36,16 +36,16 @@ public class crudPersona extends javax.swing.JFrame {
         ClsPersona clasePersona = new ClsPersona();
         ArrayList<Persona> Personas = clasePersona.MostrarPersona();
         //Creamos un array donde volcaremos los datos traidos en MostrarPersona()
-        String columnas[] = new String[5];
+        String filas[] = new String[5];
         for (var iterarDatoPersona : Personas) {
             //agregamos cada dato de la consulta en un espacio del arreglo
-            columnas[0] = String.valueOf(iterarDatoPersona.getIdPersona());
-            columnas[1] = iterarDatoPersona.getNombre();
-            columnas[2] = iterarDatoPersona.getApellido();
-            columnas[3] = String.valueOf(iterarDatoPersona.getEdad());
-            columnas[4] = iterarDatoPersona.getSexo();
+            filas[0] = String.valueOf(iterarDatoPersona.getIdPersona());
+            filas[1] = iterarDatoPersona.getNombre();
+            filas[2] = iterarDatoPersona.getApellido();
+            filas[3] = String.valueOf(iterarDatoPersona.getEdad());
+            filas[4] = iterarDatoPersona.getSexo();
             //Agregamos el arreglo de los datos al modelo de la Tabla
-            ModeloTabla.addRow(columnas);
+            ModeloTabla.addRow(filas);
         }
         //asignamos el modelo a la Tabla para mostrarlos al usuario
         tbPersona.setModel(ModeloTabla);
