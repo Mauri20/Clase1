@@ -29,7 +29,7 @@ public class crudPersona extends javax.swing.JFrame {
         //Cargar la tabla
         MostrarTablaPersona();
     }
-
+    
     void MostrarTablaPersona() {
         String TITULOS[] = {"ID", "NOMBRE", "APELLIDO", "EDAD", "SEXO"};
         DefaultTableModel ModeloTabla = new DefaultTableModel(null, TITULOS);
