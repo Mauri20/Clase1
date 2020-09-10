@@ -24,6 +24,7 @@ public class crudPersona extends javax.swing.JFrame {
      */
     public crudPersona() {
         initComponents();
+        txtId.enable(false);
         //Centrar el formulario
         this.setLocationRelativeTo(null);
         //Cargar la tabla

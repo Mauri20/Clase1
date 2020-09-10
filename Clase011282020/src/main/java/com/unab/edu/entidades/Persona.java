@@ -15,9 +15,9 @@ import lombok.Data;
  */
 @Data
 public class Persona {
-    private int IdPersona;
-    private String Nombre;
-    private String Apellido;
-    private int Edad;
-    private String Sexo;
+    protected int IdPersona;
+    protected String Nombre;
+    protected String Apellido;
+    protected int Edad;
+    protected String Sexo;
 }
