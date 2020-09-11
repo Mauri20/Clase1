@@ -24,4 +24,5 @@
 		<scope>provided</scope>
 	</dependency>
     </dependencies>
+    <name>Clase05</name>
 </project>
