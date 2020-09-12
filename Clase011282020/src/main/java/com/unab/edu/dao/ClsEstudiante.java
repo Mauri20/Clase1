@@ -57,8 +57,14 @@ public class ClsEstudiante {
                 est.setPass(res.getString("Pass"));
                 est.setNie(res.getString("NIE"));
             }
-            if (est.getUsu().equals(pUsuario) && est.getPass().equals(pPass)) {
-                retorno = true;
+            //Es un poco innecesario hacer el IF porque si el while llena el est quiere
+            //decir que encontro un dato, y seria extraño que hubieran 2 usuarios con los mismos datos
+            if (est.getUsu() != null) {
+                //Si logro entrar aqui significa que encontro coincidencias en la base de datos 
+                //con las credenciales ingresadas (El pass ya va encriptado en la comparacion)
+                if (est.getUsu().equals(pUsuario)) {
+                    retorno = true;
+                }
             }
             con.close();
         } catch (Exception e) {
@@ -80,12 +86,13 @@ public class ClsEstudiante {
             JOptionPane.showMessageDialog(null, "Estudiante Registrado Correctamente!");
             con.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error al Guardar!"+e);
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al Guardar!" + e);
 
         }
 
     }
-     public void EliminarEstudiante(Estudiante estudiante) {
+
+    public void EliminarEstudiante(Estudiante estudiante) {
         try {
             CallableStatement statement = con.prepareCall("call sp_d_Estudiante(?);");
             statement.setInt("pIdEstudiante", estudiante.getId());
@@ -99,6 +106,7 @@ public class ClsEstudiante {
 
         }
     }
+
     public void ActualizarEstudiante(Estudiante estudiante) {
         try {
             CallableStatement statement = con.prepareCall("call sp_u_Estudiante(?,?,?,?,?,?);");
@@ -112,7 +120,7 @@ public class ClsEstudiante {
             JOptionPane.showMessageDialog(null, "Estudiante Actualizado Correctamente!");
             con.close();
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error al Actualizar! "+e);
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al Actualizar! " + e);
 
         }
 

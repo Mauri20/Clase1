@@ -127,17 +127,20 @@ public class frmLogin extends javax.swing.JFrame {
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
         ClsEstudiante estudianteDao = new ClsEstudiante();
-        String user= txtUsuario.getText();
-        String pass= txtPass.getText();
-        
-        boolean logueo=estudianteDao.LoginEstudiante(user, pass);
-        if(logueo==true){
-            crudPersona.setVisible(true);
+        String user = txtUsuario.getText();
+        String pass = txtPass.getText();
+        if (!user.isEmpty() && !pass.isEmpty()) {
+            boolean logueo = estudianteDao.LoginEstudiante(user, pass);
+            if (logueo == true) {
+                crudPersona.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Datos incorrectos!");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Llene los campos!");
         }
-        else{
-            JOptionPane.showMessageDialog(null, "Datos incorrectos!");
-        }
-        
+
+
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
