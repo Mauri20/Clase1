@@ -8,6 +8,7 @@ package com.unab.edu.dao;
 import com.unab.edu.conexionmysql.ConexionBd;
 import com.unab.edu.entidades.Estudiante;
 import java.sql.*;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,6 +19,28 @@ public class ClsEstudiante {
 
     ConexionBd cn = new ConexionBd();
     Connection con = cn.retornarConexion();
+
+    public ArrayList<Estudiante> MostrarEstudiantes() {
+        ArrayList<Estudiante> lista = new ArrayList<>();
+        try {
+            CallableStatement statement = con.prepareCall("call sp_s_Estudiante();");
+            ResultSet res = statement.executeQuery();
+            while (res.next()) {
+                Estudiante est = new Estudiante();
+                est.setId(res.getInt("idEstudiante"));
+                est.setMatricula(res.getInt("Matricula"));
+                est.setIdPersona(res.getInt("idPersona"));
+                est.setUsu(res.getString("Usu"));
+                est.setPass(res.getString("Pass"));
+                est.setNie(res.getString("NIE"));
+                est.setNombre(res.getString("Nombre"));
+                lista.add(est);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No se cargaron los Estudiantes " + e);
+        }
+        return lista;
+    }
 
     public boolean LoginEstudiante(String pUsuario, String pPass) {
         boolean retorno = false;
@@ -43,5 +66,55 @@ public class ClsEstudiante {
             //JOptionPane.showMessageDialog(null, " "+e);
         }
         return retorno;
+    }
+
+    public void AgregarEstudiante(Estudiante estudiante) {
+        try {
+            CallableStatement statement = con.prepareCall("call sp_i_Estudiante(?,?,?,?,?);");
+            statement.setInt("pMatricula", estudiante.getMatricula());
+            statement.setInt("pIdPersona", estudiante.getIdPersona());
+            statement.setString("pUsuario", estudiante.getUsu());
+            statement.setString("pPass", estudiante.getPass());
+            statement.setString("pNie", estudiante.getNie());
+            statement.execute();
+            JOptionPane.showMessageDialog(null, "Estudiante Registrado Correctamente!");
+            con.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al Guardar!"+e);
+
+        }
+
+    }
+     public void EliminarEstudiante(Estudiante estudiante) {
+        try {
+            CallableStatement statement = con.prepareCall("call sp_d_Estudiante(?);");
+            statement.setInt("pIdEstudiante", estudiante.getId());
+            //Esto devuelve un dato al realizar la consulta
+            //ResultSet resultado= Statement.executeQuery();
+            statement.execute();
+            JOptionPane.showMessageDialog(null, "Estudiante Eliminado de la Base de Datos!");
+            con.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al eliminar los Datos " + e);
+
+        }
+    }
+    public void ActualizarEstudiante(Estudiante estudiante) {
+        try {
+            CallableStatement statement = con.prepareCall("call sp_u_Estudiante(?,?,?,?,?,?);");
+            statement.setInt("pIdEstudiante", estudiante.getId());
+            statement.setInt("pMatricula", estudiante.getMatricula());
+            statement.setInt("pIdPersona", estudiante.getIdPersona());
+            statement.setString("pUsuario", estudiante.getUsu());
+            statement.setString("pPass", estudiante.getPass());
+            statement.setString("pNie", estudiante.getNie());
+            statement.execute();
+            JOptionPane.showMessageDialog(null, "Estudiante Actualizado Correctamente!");
+            con.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al Actualizar! "+e);
+
+        }
+
     }
 }

@@ -45,6 +45,30 @@ public class ClsPersona {
         }
         return Personas;
     }
+    public ArrayList<Persona> MostrarPersonasSinUsuario() {
+        //Generar la variable de retorno
+        ArrayList<Persona> Personas = new ArrayList<>();
+        try {
+            CallableStatement Statement = conectar.prepareCall("call sp_s_PersonaSinUsuario();");
+            ResultSet resultadoDeConsulta = Statement.executeQuery();
+            while (resultadoDeConsulta.next()) {
+                //Objeto persona
+                Persona persona = new Persona();
+                //Llnando el objeto
+                persona.setIdPersona(resultadoDeConsulta.getInt("idPersona"));
+                persona.setNombre(resultadoDeConsulta.getString("Nombre"));
+                persona.setApellido(resultadoDeConsulta.getString("Apellido"));
+                persona.setEdad(resultadoDeConsulta.getInt("Edad"));
+                persona.setSexo(resultadoDeConsulta.getString("sexo"));
+                //Agregando el objeto a la coleccion
+                Personas.add(persona);
+            }
+            conectar.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return Personas;
+    }
 
     public void AgregarPersona(Persona persona) {
         try {
