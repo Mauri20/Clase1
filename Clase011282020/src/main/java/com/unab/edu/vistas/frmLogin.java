@@ -6,6 +6,7 @@
 package com.unab.edu.vistas;
 
 import com.unab.edu.dao.ClsEstudiante;
+import com.unab.edu.dao.ClsProfesor;
 import javax.swing.JOptionPane;
 
 /**
@@ -31,12 +32,15 @@ public class frmLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        gbOpc = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         txtUsuario = new javax.swing.JTextField();
         btnIngresar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         txtPass = new javax.swing.JPasswordField();
+        opcEstudiante = new javax.swing.JRadioButton();
+        opcProfesor = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(51, 0, 255));
@@ -61,22 +65,36 @@ public class frmLogin extends javax.swing.JFrame {
 
         txtPass.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        gbOpc.add(opcEstudiante);
+        opcEstudiante.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        opcEstudiante.setText("Estudiante");
+
+        gbOpc.add(opcProfesor);
+        opcProfesor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        opcProfesor.setText("Profesor");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addComponent(btnIngresar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(24, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(opcEstudiante)
+                            .addGap(18, 18, 18)
+                            .addComponent(opcProfesor)
+                            .addGap(24, 24, 24))
+                        .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(19, 19, 19))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(95, 95, 95)
-                .addComponent(btnIngresar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -89,9 +107,13 @@ public class frmLogin extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(opcEstudiante)
+                    .addComponent(opcProfesor))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(btnIngresar)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jLabel3.setFont(new java.awt.Font("Trebuchet MS", 0, 24)); // NOI18N
@@ -118,26 +140,45 @@ public class frmLogin extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    crudPersona crudPersona = new crudPersona();
+    crudEstudiante crudEstudiante = new crudEstudiante();
+    crudProfesor crudProfesor = new crudProfesor();
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
-        ClsEstudiante estudianteDao = new ClsEstudiante();
-        String user = txtUsuario.getText();
-        String pass = txtPass.getText();
-        if (!user.isEmpty() && !pass.isEmpty()) {
-            boolean logueo = estudianteDao.LoginEstudiante(user, pass);
-            if (logueo == true) {
-                crudPersona.setVisible(true);
+        if (opcEstudiante.isSelected()) {
+            ClsEstudiante estudianteDao = new ClsEstudiante();
+            String user = txtUsuario.getText();
+            String pass = txtPass.getText();
+            if (!user.isEmpty() && !pass.isEmpty()) {
+                boolean logueo = estudianteDao.LoginEstudiante(user, pass);
+                if (logueo == true) {
+                    crudEstudiante.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Datos incorrectos! para el Estudiante");
+                }
             } else {
-                JOptionPane.showMessageDialog(null, "Datos incorrectos!");
+                JOptionPane.showMessageDialog(null, "Llene los campos!");
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Llene los campos!");
+        }else if(opcProfesor.isSelected()){
+            ClsProfesor profesorDao= new ClsProfesor();
+            String user = txtUsuario.getText();
+            String pass = txtPass.getText();
+            if (!user.isEmpty() && !pass.isEmpty()) {
+                boolean logueo = profesorDao.LoginProfesor(user, pass);
+                if (logueo == true) {
+                    crudProfesor.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Datos incorrectos! para el Profesor");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Llene los campos!");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Complete Todos! los Campos");
         }
 
 
@@ -180,10 +221,13 @@ public class frmLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngresar;
+    private javax.swing.ButtonGroup gbOpc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JRadioButton opcEstudiante;
+    private javax.swing.JRadioButton opcProfesor;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables

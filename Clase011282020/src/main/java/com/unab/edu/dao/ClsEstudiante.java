@@ -57,12 +57,14 @@ public class ClsEstudiante {
                 est.setPass(res.getString("Pass"));
                 est.setNie(res.getString("NIE"));
             }
+            String passnueva=est.getPass();
+            pPass=passnueva;
             //Es un poco innecesario hacer el IF porque si el while llena el est quiere
             //decir que encontro un dato, y seria extraño que hubieran 2 usuarios con los mismos datos
             if (est.getUsu() != null) {
                 //Si logro entrar aqui significa que encontro coincidencias en la base de datos 
                 //con las credenciales ingresadas (El pass ya va encriptado en la comparacion)
-                if (est.getUsu().equals(pUsuario)) {
+                if (est.getUsu().equals(pUsuario) && est.getPass().equals(pPass)) {
                     retorno = true;
                 }
             }

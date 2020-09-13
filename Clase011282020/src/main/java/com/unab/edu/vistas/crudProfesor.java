@@ -6,44 +6,27 @@
 package com.unab.edu.vistas;
 
 import com.unab.edu.dao.*;
-import com.unab.edu.entidades.*;
+import com.unab.edu.entidades.Persona;
+import com.unab.edu.entidades.Profesor;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Mauricio
  */
-public class crudEstudiante extends javax.swing.JFrame {
+public class crudProfesor extends javax.swing.JFrame {
 
     /**
-     * Creates new form crudEstudiante
+     * Creates new form crudProfesor
      */
-    public crudEstudiante() {
+    public crudProfesor() {
         initComponents();
-        txtIdEstudiante.enable(false);
         this.setLocationRelativeTo(null);
-        MostrarEstudiantes();
+        txtIdProfesor.enable(false);
         MostrarPersonas();
-    }
-
-    void MostrarEstudiantes() {
-        String TITULOS[] = {"IDESTUDIANTE", "MATRICULA", "IDPERSONA", "NOMBRE", "USUARIO", "PASSWORD", "NIE"};
-        DefaultTableModel modeloTabla = new DefaultTableModel(null, TITULOS);
-        ClsEstudiante estudianteDao = new ClsEstudiante();
-        var listaEstudiantes = estudianteDao.MostrarEstudiantes();
-        String filas[] = new String[7];
-        for (var iterarDatos : listaEstudiantes) {
-            filas[0] = String.valueOf(iterarDatos.getId());
-            filas[1] = String.valueOf(iterarDatos.getMatricula());
-            filas[2] = String.valueOf(iterarDatos.getIdPersona());
-            filas[3] = iterarDatos.getNombre();
-            filas[4] = iterarDatos.getUsu();
-            filas[5] = iterarDatos.getPass();
-            filas[6] = iterarDatos.getNie();
-            modeloTabla.addRow(filas);
-        }
-        tbEstudiantes.setModel(modeloTabla);
+        MostrarProfesores();
     }
 
     void MostrarPersonas() {
@@ -53,7 +36,7 @@ public class crudEstudiante extends javax.swing.JFrame {
         ClsPersona clasePersona = new ClsPersona();
 
         //ArrayList<Persona> Personas = clasePersona.MostrarPersonas();
-        ArrayList<Persona> Personas = clasePersona.MostrarEstudiantesSinUsuario();
+        ArrayList<Persona> Personas = clasePersona.MostrarProfesoresSinUsuario();
         //Creamos un array donde volcaremos los datos traidos en MostrarPersona()
         String filas[] = new String[2];
         for (var iterarDatoPersona : Personas) {
@@ -67,6 +50,33 @@ public class crudEstudiante extends javax.swing.JFrame {
         tbPersonas.setModel(ModeloTabla);
     }
 
+    void MostrarProfesores() {
+        String TITULOS[] = {"IDPROFESOR", "IDPERSONA", "NOMBRE", "DUI", "USUARIO", "PASSWORD"};
+        DefaultTableModel modeloTabla = new DefaultTableModel(null, TITULOS);
+        ClsProfesor profesorDao = new ClsProfesor();
+        var listaProfesores = profesorDao.MostrarProfesores();
+        String filas[] = new String[6];
+        for (var iterarDatos : listaProfesores) {
+            filas[0] = String.valueOf(iterarDatos.getId());
+            filas[1] = String.valueOf(iterarDatos.getIdPersona());
+            filas[2] = iterarDatos.getNombre();
+            filas[3] = iterarDatos.getDui();
+            filas[4] = iterarDatos.getUsuario();
+            filas[5] = iterarDatos.getPass();
+            modeloTabla.addRow(filas);
+        }
+        tbProfesores.setModel(modeloTabla);
+    }
+
+    void limpiar() {
+        txtIdProfesor.setText("");
+        txtIdPersona.setText("");
+        txtDui.setText("");
+        txtUsuario.setText("");
+        txtPass.setText("");
+    }
+    String passBaseDeDatos = null;
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -78,10 +88,9 @@ public class crudEstudiante extends javax.swing.JFrame {
 
         tpMostrar = new javax.swing.JTabbedPane();
         jpDatos = new javax.swing.JPanel();
-        txtIdEstudiante = new javax.swing.JTextField();
+        txtIdProfesor = new javax.swing.JTextField();
         txtIdPersona = new javax.swing.JTextField();
-        txtMatricula = new javax.swing.JTextField();
-        txtNie = new javax.swing.JTextField();
+        txtDui = new javax.swing.JTextField();
         txtUsuario = new javax.swing.JTextField();
         txtPass = new javax.swing.JPasswordField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -92,13 +101,13 @@ public class crudEstudiante extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
         jpMostrarTabla = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tbEstudiantes = new javax.swing.JTable();
+        tbProfesores = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,13 +116,11 @@ public class crudEstudiante extends javax.swing.JFrame {
 
         jpDatos.setBackground(new java.awt.Color(228, 227, 233));
 
-        txtIdEstudiante.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtIdProfesor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         txtIdPersona.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        txtMatricula.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-
-        txtNie.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtDui.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         txtUsuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -153,16 +160,13 @@ public class crudEstudiante extends javax.swing.JFrame {
         jLabel3.setText("IDPERSONA");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("MATRICULA");
+        jLabel4.setText("DUI");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("USUARIO");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("PASSWORD");
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel7.setText("NIE");
 
         btnGuardar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnGuardar.setText("Guardar");
@@ -188,6 +192,14 @@ public class crudEstudiante extends javax.swing.JFrame {
             }
         });
 
+        btnLimpiar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpDatosLayout = new javax.swing.GroupLayout(jpDatos);
         jpDatos.setLayout(jpDatosLayout);
         jpDatosLayout.setHorizontalGroup(
@@ -196,57 +208,54 @@ public class crudEstudiante extends javax.swing.JFrame {
                 .addGap(53, 53, 53)
                 .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpDatosLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addContainerGap())
-                    .addGroup(jpDatosLayout.createSequentialGroup()
-                        .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(txtIdPersona, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
-                            .addComponent(txtMatricula)
-                            .addComponent(txtUsuario)
-                            .addComponent(txtPass)
-                            .addComponent(txtNie))
+                        .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel4)
+                                .addComponent(txtIdPersona)
+                                .addComponent(txtDui)
+                                .addComponent(txtUsuario)
+                                .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5)
+                            .addComponent(txtIdProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(39, 39, 39)
                         .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpDatosLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(20, Short.MAX_VALUE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpDatosLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel1)
                                 .addGap(67, 67, 67))))
                     .addGroup(jpDatosLayout.createSequentialGroup()
-                        .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jpDatosLayout.createSequentialGroup()
-                                .addComponent(btnGuardar)
-                                .addGap(50, 50, 50)
-                                .addComponent(btnEliminar)
-                                .addGap(46, 46, 46)
-                                .addComponent(btnActualizar))
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addComponent(txtIdEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addComponent(btnGuardar)
+                        .addGap(50, 50, 50)
+                        .addComponent(btnEliminar)
+                        .addGap(46, 46, 46)
+                        .addComponent(btnActualizar)
+                        .addGap(47, 47, 47)
+                        .addComponent(btnLimpiar)
+                        .addContainerGap())))
         );
         jpDatosLayout.setVerticalGroup(
             jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpDatosLayout.createSequentialGroup()
-                .addGap(13, 13, 13)
-                .addComponent(jLabel2)
-                .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(46, 46, 46)
+                .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jpDatosLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtIdEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(11, 11, 11)
+                        .addComponent(txtIdProfesor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtIdPersona, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(15, 15, 15)
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtDui, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
                         .addComponent(jLabel5)
                         .addGap(9, 9, 9)
@@ -254,21 +263,17 @@ public class crudEstudiante extends javax.swing.JFrame {
                         .addGap(15, 15, 15)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabel7))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpDatosLayout.createSequentialGroup()
-                        .addGap(36, 36, 36)
+                        .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jpDatosLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnEliminar)
-                    .addComponent(btnActualizar))
+                    .addComponent(btnActualizar)
+                    .addComponent(btnLimpiar))
                 .addGap(40, 40, 40))
         );
 
@@ -276,8 +281,8 @@ public class crudEstudiante extends javax.swing.JFrame {
 
         jpMostrarTabla.setBackground(new java.awt.Color(228, 227, 233));
 
-        tbEstudiantes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        tbEstudiantes.setModel(new javax.swing.table.DefaultTableModel(
+        tbProfesores.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        tbProfesores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -288,12 +293,12 @@ public class crudEstudiante extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tbEstudiantes.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbProfesores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbEstudiantesMouseClicked(evt);
+                tbProfesoresMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(tbEstudiantes);
+        jScrollPane2.setViewportView(tbProfesores);
 
         javax.swing.GroupLayout jpMostrarTablaLayout = new javax.swing.GroupLayout(jpMostrarTabla);
         jpMostrarTabla.setLayout(jpMostrarTablaLayout);
@@ -309,7 +314,7 @@ public class crudEstudiante extends javax.swing.JFrame {
             .addGroup(jpMostrarTablaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         tpMostrar.addTab("MOSTRAR DATOS", jpMostrarTabla);
@@ -334,74 +339,86 @@ public class crudEstudiante extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsuarioActionPerformed
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-        ClsEstudiante estudianteDao = new ClsEstudiante();
-        Estudiante est = new Estudiante();
-        est.setMatricula(Integer.parseInt(txtMatricula.getText()));
-        est.setIdPersona(Integer.parseInt(txtIdPersona.getText()));
-        est.setUsu(txtUsuario.getText());
-        est.setPass(txtPass.getText());
-        est.setNie(txtNie.getText());
-        estudianteDao.AgregarEstudiante(est);
-        MostrarEstudiantes();
-        MostrarPersonas();
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-        ClsEstudiante estudianteDao = new ClsEstudiante();
-        Estudiante est = new Estudiante();
-        est.setId(Integer.parseInt(txtIdEstudiante.getText()));
-        estudianteDao.EliminarEstudiante(est);
-        MostrarEstudiantes();
-        MostrarPersonas();
-
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        // TODO add your handling code here:
-        ClsEstudiante estudianteDao = new ClsEstudiante();
-        Estudiante est = new Estudiante();
-        est.setId(Integer.parseInt(txtIdEstudiante.getText()));
-        est.setMatricula(Integer.parseInt(txtMatricula.getText()));
-        est.setIdPersona(Integer.parseInt(txtIdPersona.getText()));
-        est.setUsu(txtUsuario.getText());
-        est.setPass(txtPass.getText());
-        est.setNie(txtNie.getText());
-        estudianteDao.ActualizarEstudiante(est);
-        MostrarEstudiantes();
-        MostrarPersonas();
-    }//GEN-LAST:event_btnActualizarActionPerformed
-
-    private void tbEstudiantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbEstudiantesMouseClicked
-        // TODO add your handling code here:
-        //JOptionPane.showMessageDialog(null, "Si funciona el Evento");
-        //Movernos dentro de los elementos del TabbedPane
-        tpMostrar.setSelectedIndex(tpMostrar.indexOfComponent(jpDatos));
-        //Obtener la fila seleccionada
-        int fila = tbEstudiantes.getSelectedRow();
-        //Capturando los datos de la fila seleccionada "IDESTUDIANTE", "MATRICULA", "IDPERSONA", "NOMBRE", "USUARIO", "PASSWORD", "NIE"
-        String Id = String.valueOf(tbEstudiantes.getValueAt(fila, 0));
-        String Matricula = String.valueOf(tbEstudiantes.getValueAt(fila, 1));
-        String IdPersona = String.valueOf(tbEstudiantes.getValueAt(fila, 2));
-        String Usuario = String.valueOf(tbEstudiantes.getValueAt(fila, 4));
-        String Pass = String.valueOf(tbEstudiantes.getValueAt(fila, 5));
-        String Nie=String.valueOf(tbEstudiantes.getValueAt(fila, 6));
-        //Asignando los datos capturados al formulario
-        txtIdEstudiante.setText(Id);
-        txtMatricula.setText(Matricula);
-        txtIdPersona.setText(IdPersona);
-        txtUsuario.setText(Usuario);
-        txtPass.setText(Pass);
-        txtNie.setText(Nie);
-    }//GEN-LAST:event_tbEstudiantesMouseClicked
-
     private void tbPersonasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbPersonasMouseClicked
         // TODO add your handling code here:
         int fila = tbPersonas.getSelectedRow();
         txtIdPersona.setText(String.valueOf(tbPersonas.getValueAt(fila, 0)));
     }//GEN-LAST:event_tbPersonasMouseClicked
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        ClsProfesor profeDao = new ClsProfesor();
+        Profesor prof = new Profesor();
+        prof.setIdPersona(Integer.parseInt(txtIdPersona.getText()));
+        prof.setDui(txtDui.getText());
+        prof.setUsuario(txtUsuario.getText());
+        prof.setPass(txtPass.getText());
+        profeDao.AgregarProfesor(prof);
+        MostrarPersonas();
+        MostrarProfesores();
+        limpiar();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        ClsProfesor profeDao = new ClsProfesor();
+        Profesor profe = new Profesor();
+        profe.setId(Integer.parseInt(txtIdProfesor.getText()));
+        //Llamamos el metodo para eliminar
+        profeDao.EliminarProfesor(profe);
+        MostrarPersonas();
+        MostrarProfesores();
+        limpiar();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+        ClsProfesor profeDao = new ClsProfesor();
+        Profesor prof = new Profesor();
+        prof.setId(Integer.parseInt(txtIdProfesor.getText()));
+        prof.setIdPersona(Integer.parseInt(txtIdPersona.getText()));
+        prof.setDui(txtDui.getText());
+        prof.setUsuario(txtUsuario.getText());
+        prof.setPass(txtPass.getText());
+        if (passBaseDeDatos.equals(txtPass.getText())) {
+            profeDao.ActualizarProfesor(prof, false);
+            //JOptionPane.showMessageDialog(null, "Son iguales");
+        } else {
+            profeDao.ActualizarProfesor(prof, true);
+            //JOptionPane.showMessageDialog(null, "Cambiaron");
+        }
+        MostrarProfesores();
+        MostrarPersonas();
+
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void tbProfesoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbProfesoresMouseClicked
+        // TODO add your handling code here:
+        //JOptionPane.showMessageDialog(null, "Si funciona el Evento");
+        //Movernos dentro de los elementos del TabbedPane
+        tpMostrar.setSelectedIndex(tpMostrar.indexOfComponent(jpDatos));
+        //Obtener la fila seleccionada
+        int fila = tbProfesores.getSelectedRow();
+        //Capturando los datos de la fila seleccionada "IDPROFESOR", "IDPERSONA", "NOMBRE", "USUARIO", "PASSWORD"
+        String Id = String.valueOf(tbProfesores.getValueAt(fila, 0));
+        String IdPersona = String.valueOf(tbProfesores.getValueAt(fila, 1));
+        String Dui = String.valueOf(tbProfesores.getValueAt(fila, 3));
+        String Usuario = String.valueOf(tbProfesores.getValueAt(fila, 4));
+        String Pass = String.valueOf(tbProfesores.getValueAt(fila, 5));
+        //para actualizarla despues
+        passBaseDeDatos = String.valueOf(tbProfesores.getValueAt(fila, 5));
+        //Asignando los datos capturados al formulario
+        txtIdProfesor.setText(Id);
+        txtIdPersona.setText(IdPersona);
+        txtDui.setText(Dui);
+        txtUsuario.setText(Usuario);
+        txtPass.setText(Pass);
+    }//GEN-LAST:event_tbProfesoresMouseClicked
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+        limpiar();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -420,20 +437,20 @@ public class crudEstudiante extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(crudEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(crudProfesor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(crudEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(crudProfesor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(crudEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(crudProfesor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(crudEstudiante.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(crudProfesor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new crudEstudiante().setVisible(true);
+                new crudProfesor().setVisible(true);
             }
         });
     }
@@ -442,24 +459,23 @@ public class crudEstudiante extends javax.swing.JFrame {
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPanel jpDatos;
     private javax.swing.JPanel jpMostrarTabla;
-    private javax.swing.JTable tbEstudiantes;
     private javax.swing.JTable tbPersonas;
+    private javax.swing.JTable tbProfesores;
     private javax.swing.JTabbedPane tpMostrar;
-    private javax.swing.JTextField txtIdEstudiante;
+    private javax.swing.JTextField txtDui;
     private javax.swing.JTextField txtIdPersona;
-    private javax.swing.JTextField txtMatricula;
-    private javax.swing.JTextField txtNie;
+    private javax.swing.JTextField txtIdProfesor;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
