@@ -1,0 +1,48 @@
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_s_PersonaSinUsuario`()
+BEGIN
+Select a.idPersona, a.Nombre, a.Apellido, a.Edad, a.Sexo from persona as a left join estudiante as b on b.idPersona=a.idPersona where b.idPersona Is Null;
+END
+
+
+//*******************************************************
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_s_PersonaSinUsuario2`()
+BEGIN
+Select a.idPersona, a.Nombre, a.Apellido, a.Edad, a.Sexo from persona as a left join profesor as b on b.idPersona=a.idPersona where b.idPersona Is Null;
+END
+
+//*******************************************************
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_s_loginProfesor`(
+pUsuario varchar(45),
+pPass varchar(45)
+)
+BEGIN
+	select * from profesor where Usu=pUsuario and Pass=sha2(pPass,512);
+END
+
+//*******************************************************
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_u_Profesor`(
+pIdProfesor int,
+pIdPersona int,
+pDui varchar(45),
+pUsuario varchar(45),
+pPass varchar(600)
+)
+BEGIN
+	update profesor set IdPersona=pIdPersona, Dui=pDui, Usu=pUsuario, Pass=pPass where idProfesor=pIdProfesor;
+END
+
+//********************************************************
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_u_Profesor2`(
+pIdProfesor int,
+pIdPersona int,
+pDui varchar(45),
+pUsuario varchar(45),
+pPass varchar(45)
+)
+BEGIN
+	update profesor set IdPersona=pIdPersona, Dui=pDui, Usu=pUsuario, Pass=sha2(pPass,512) where idProfesor=pIdProfesor;
+END
