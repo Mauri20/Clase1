@@ -75,6 +75,7 @@ public class crudProfesor extends javax.swing.JFrame {
         txtUsuario.setText("");
         txtPass.setText("");
     }
+    
     String passBaseDeDatos = null;
 
     /**
