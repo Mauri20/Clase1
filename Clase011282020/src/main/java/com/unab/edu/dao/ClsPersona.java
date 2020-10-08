@@ -8,6 +8,7 @@ package com.unab.edu.dao;
 import com.unab.edu.conexionmysql.ConexionBd;
 import com.unab.edu.entidades.Persona;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.swing.JOptionPane;
 
@@ -20,7 +21,7 @@ public class ClsPersona {
     //Estableciendo la conexion
     ConexionBd claseConectar = new ConexionBd();
     Connection conectar = claseConectar.retornarConexion();
-
+    
     public ArrayList<Persona> MostrarPersona() {
         //Generar la variable de retorno
         ArrayList<Persona> Personas = new ArrayList<>();
@@ -36,6 +37,7 @@ public class ClsPersona {
                 persona.setApellido(resultadoDeConsulta.getString("Apellido"));
                 persona.setEdad(resultadoDeConsulta.getInt("Edad"));
                 persona.setSexo(resultadoDeConsulta.getString("sexo"));
+                persona.setFecha(resultadoDeConsulta.getDate("Fecha"));
                 //Agregando el objeto a la coleccion
                 Personas.add(persona);
             }
@@ -84,6 +86,8 @@ public class ClsPersona {
                 persona.setApellido(resultadoDeConsulta.getString("Apellido"));
                 persona.setEdad(resultadoDeConsulta.getInt("Edad"));
                 persona.setSexo(resultadoDeConsulta.getString("sexo"));
+                //Pendiente de Revisio#############################################################################
+                //persona.setFecha(resultadoDeConsulta.getDate("Fecha"));
                 //Agregando el objeto a la coleccion
                 Personas.add(persona);
             }
@@ -96,11 +100,12 @@ public class ClsPersona {
 
     public void AgregarPersona(Persona persona) {
         try {
-            CallableStatement Statement = conectar.prepareCall("call sp_i_Persona(?,?,?,?);");
+            CallableStatement Statement = conectar.prepareCall("call sp_i_Persona(?,?,?,?,?);");
             Statement.setString("pNombre", persona.getNombre());
             Statement.setString("pApellido", persona.getApellido());
             Statement.setInt("pEdad", persona.getEdad());
             Statement.setString("pSexo", persona.getSexo());
+            Statement.setDate("pFecha", new java.sql.Date(persona.getFecha().getTime()));
             //Esto devuelve un dato al realizar la consulta
             //ResultSet resultado= Statement.executeQuery();
             Statement.execute();
@@ -128,12 +133,14 @@ public class ClsPersona {
     }
     public void ActualizarPersona(Persona persona) {
         try {
-            CallableStatement Statement = conectar.prepareCall("call sp_u_Persona(?,?,?,?,?);");
+            CallableStatement Statement = conectar.prepareCall("call sp_u_Persona(?,?,?,?,?,?);");
             Statement.setInt("pIdPersona", persona.getIdPersona());
             Statement.setString("pNombre", persona.getNombre());
             Statement.setString("pApellido", persona.getApellido());
             Statement.setInt("pEdad", persona.getEdad());
             Statement.setString("pSexo", persona.getSexo());
+            Statement.setDate("pFecha", new java.sql.Date(persona.getFecha().getTime()));
+
             //Esto devuelve un dato al realizar la consulta
             //ResultSet resultado= Statement.executeQuery();
             Statement.execute();
