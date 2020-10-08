@@ -9,6 +9,7 @@ import com.unab.edu.dao.*;
 import com.unab.edu.entidades.*;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,7 +26,7 @@ public class crudEstudiante extends javax.swing.JFrame {
         txtIdEstudiante.enable(false);
         this.setLocationRelativeTo(null);
         MostrarEstudiantes();
-        MostrarPersonas();
+//        MostrarPersonas();
         DisplayMember();
     }
 
@@ -48,26 +49,26 @@ public class crudEstudiante extends javax.swing.JFrame {
         tbEstudiantes.setModel(modeloTabla);
     }
 
-    void MostrarPersonas() {
-        String TITULOS[] = {"ID", "NOMBREPERSONA"};
-        DefaultTableModel ModeloTabla = new DefaultTableModel(null, TITULOS);
-        //tbPersona.setModel(ModeloTabla);
-        ClsPersona clasePersona = new ClsPersona();
-
-        //ArrayList<Persona> Personas = clasePersona.MostrarPersonas();
-        ArrayList<Persona> Personas = clasePersona.MostrarEstudiantesSinUsuario();
-        //Creamos un array donde volcaremos los datos traidos en MostrarPersona()
-        String filas[] = new String[2];
-        for (var iterarDatoPersona : Personas) {
-            //agregamos cada dato de la consulta en un espacio del arreglo
-            filas[0] = String.valueOf(iterarDatoPersona.getIdPersona());
-            filas[1] = iterarDatoPersona.getNombre() + " " + iterarDatoPersona.getApellido();
-            //Agregamos el arreglo de los datos al modelo de la Tabla
-            ModeloTabla.addRow(filas);
-        }
-        //asignamos el modelo a la Tabla para mostrarlos al usuario
-        tbPersonas.setModel(ModeloTabla);
-    }
+//    void MostrarPersonas() {
+//        String TITULOS[] = {"ID", "NOMBREPERSONA"};
+//        DefaultTableModel ModeloTabla = new DefaultTableModel(null, TITULOS);
+//        //tbPersona.setModel(ModeloTabla);
+//        ClsPersona clasePersona = new ClsPersona();
+//
+//        //ArrayList<Persona> Personas = clasePersona.MostrarPersonas();
+//        ArrayList<Persona> Personas = clasePersona.MostrarEstudiantesSinUsuario();
+//        //Creamos un array donde volcaremos los datos traidos en MostrarPersona()
+//        String filas[] = new String[2];
+//        for (var iterarDatoPersona : Personas) {
+//            //agregamos cada dato de la consulta en un espacio del arreglo
+//            filas[0] = String.valueOf(iterarDatoPersona.getIdPersona());
+//            filas[1] = iterarDatoPersona.getNombre() + " " + iterarDatoPersona.getApellido();
+//            //Agregamos el arreglo de los datos al modelo de la Tabla
+//            ModeloTabla.addRow(filas);
+//        }
+//        //asignamos el modelo a la Tabla para mostrarlos al usuario
+//        tbPersonas.setModel(ModeloTabla);
+//    }
     
     String valueMember[];
     int contador=0;
@@ -75,9 +76,11 @@ public class crudEstudiante extends javax.swing.JFrame {
     void DisplayMember(){
         DefaultComboBoxModel cboDefault = new DefaultComboBoxModel();
         ClsPersona personaDao= new ClsPersona();
-        var Personas= personaDao.MostrarEstudiantesSinUsuario();
+        var Personas= personaDao.MostrarPersona();
         valueMember= new String[Personas.size()];
+//        JOptionPane.showMessageDialog(null, Personas.size());
         String filas[] = new String[2];
+        cboDefault.addElement("");
         for (var iterarDatoPersona : Personas) {
             //agregamos cada dato de la consulta en un espacio del arreglo
             filas[0] = String.valueOf(iterarDatoPersona.getIdPersona());
@@ -114,8 +117,8 @@ public class crudEstudiante extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnActualizar = new javax.swing.JButton();
         cboPersona = new javax.swing.JComboBox<>();
+        btnLimpiar = new javax.swing.JButton();
         jpMostrarTabla = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tbEstudiantes = new javax.swing.JTable();
@@ -176,16 +179,16 @@ public class crudEstudiante extends javax.swing.JFrame {
             }
         });
 
-        btnActualizar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnActualizar.setText("Actualizar");
-        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarActionPerformed(evt);
-            }
-        });
-
         cboPersona.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cboPersona.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        btnLimpiar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpDatosLayout = new javax.swing.GroupLayout(jpDatos);
         jpDatos.setLayout(jpDatosLayout);
@@ -198,17 +201,17 @@ public class crudEstudiante extends javax.swing.JFrame {
                         .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jpDatosLayout.createSequentialGroup()
                                 .addComponent(btnGuardar)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnEliminar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnActualizar))
+                                .addComponent(btnEliminar)
+                                .addGap(14, 14, 14)
+                                .addComponent(btnLimpiar))
                             .addComponent(jLabel7)
                             .addComponent(jLabel6)
                             .addComponent(jLabel5)
                             .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(cboPersona, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(txtIdEstudiante, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)))
-                        .addGap(0, 15, Short.MAX_VALUE))
+                        .addGap(0, 33, Short.MAX_VALUE))
                     .addGroup(jpDatosLayout.createSequentialGroup()
                         .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -252,7 +255,7 @@ public class crudEstudiante extends javax.swing.JFrame {
                 .addGroup(jpDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
                     .addComponent(btnEliminar)
-                    .addComponent(btnActualizar))
+                    .addComponent(btnLimpiar))
                 .addGap(40, 40, 40))
         );
 
@@ -324,14 +327,22 @@ public class crudEstudiante extends javax.swing.JFrame {
         Estudiante est = new Estudiante();
         est.setMatricula(Integer.parseInt(txtMatricula.getText()));
 //        est.setIdPersona(Integer.parseInt(txtIdPersona.getText()));
-        est.setIdPersona(Integer.parseInt(valueMember[cboPersona.getSelectedIndex()]));
+        int idp=cboPersona.getSelectedIndex()-1;
+        JOptionPane.showMessageDialog(null, idp);
+        est.setIdPersona(Integer.parseInt(valueMember[idp]));
         est.setUsu(txtUsuario.getText());
         est.setPass(txtPass.getText());
         est.setNie(txtNie.getText());
-        estudianteDao.AgregarEstudiante(est);
+        if(txtIdEstudiante.getText().isEmpty()){
+            estudianteDao.AgregarEstudiante(est);
+        }else{
+            est.setId(Integer.parseInt(txtIdEstudiante.getText()));
+            estudianteDao.ActualizarEstudiante(est);
+        }
+        
         MostrarEstudiantes();
-        MostrarPersonas();
-        DisplayMember();
+//        MostrarPersonas();
+        //DisplayMember();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -341,24 +352,9 @@ public class crudEstudiante extends javax.swing.JFrame {
         est.setId(Integer.parseInt(txtIdEstudiante.getText()));
         estudianteDao.EliminarEstudiante(est);
         MostrarEstudiantes();
-        MostrarPersonas();
+//        MostrarPersonas();
 
     }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        // TODO add your handling code here:
-        ClsEstudiante estudianteDao = new ClsEstudiante();
-        Estudiante est = new Estudiante();
-        est.setId(Integer.parseInt(txtIdEstudiante.getText()));
-        est.setMatricula(Integer.parseInt(txtMatricula.getText()));
-        est.setIdPersona(Integer.parseInt(txtIdPersona.getText()));
-        est.setUsu(txtUsuario.getText());
-        est.setPass(txtPass.getText());
-        est.setNie(txtNie.getText());
-        estudianteDao.ActualizarEstudiante(est);
-        MostrarEstudiantes();
-        MostrarPersonas();
-    }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void tbEstudiantesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbEstudiantesMouseClicked
         // TODO add your handling code here:
@@ -377,11 +373,23 @@ public class crudEstudiante extends javax.swing.JFrame {
         //Asignando los datos capturados al formulario
         txtIdEstudiante.setText(Id);
         txtMatricula.setText(Matricula);
-        txtIdPersona.setText(IdPersona);
+//        cboPersona.setSelectedIndex(contador[]);
         txtUsuario.setText(Usuario);
         txtPass.setText(Pass);
         txtNie.setText(Nie);
+        //JOptionPane.showMessageDialog(null, valueMember);
+        int seleccionadordeVista =1;
+        for(var iterar : valueMember){
+            if(IdPersona.equals(iterar)){
+                cboPersona.setSelectedIndex(seleccionadordeVista);
+            }
+            seleccionadordeVista+=1;
+        }
     }//GEN-LAST:event_tbEstudiantesMouseClicked
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -419,9 +427,9 @@ public class crudEstudiante extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JComboBox<String> cboPersona;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
